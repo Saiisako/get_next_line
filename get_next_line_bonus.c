@@ -6,11 +6,21 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 14:24:12 by skock             #+#    #+#             */
-/*   Updated: 2024/11/27 12:01:12 by skock            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:43:50 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
+
+int	start_function(int fd, char **temp)
+{
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	*temp = malloc((BUFFER_SIZE + 1) * (sizeof(char)));
+	if (!*temp)
+		return (0);
+	return (1);
+}
 
 char	*get_next_line(int fd)
 {
@@ -19,34 +29,23 @@ char	*get_next_line(int fd)
 	char			*line;
 	int				bytes_read;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (start_function(fd, &temp) == 0)
 		return (NULL);
-	temp = malloc((BUFFER_SIZE + 1) * (sizeof(char)));
-	if (!temp)
-		return NULL;
-	line = NULL;
-	while (1)
+	while (!ft_strchr(str[fd], '\n'))
 	{
 		bytes_read = read(fd, temp, BUFFER_SIZE);
-		if (bytes_read == 0)
-		{
-			free (temp);
-			line = NULL;
-			break ;
-		}
-		if (bytes_read < 0)
+		if (bytes_read <= 0)
 		{
 			free(temp);
+			if (bytes_read == 0)
+				break ;
 			return (NULL);
 		}
 		temp[bytes_read] = '\0';
 		str[fd] = ft_strjoin(str[fd], temp);
-		if (ft_strchr(str[fd], '\n'))
-		{
-			free(temp);
-			break;
-		}
 	}
+	if (ft_strchr(str[fd], '\n'))
+		free(temp);
 	line = ft_str_n_chr_cpy(str[fd]);
 	str[fd] = ft_remove_line(str[fd], line);
 	return (line);

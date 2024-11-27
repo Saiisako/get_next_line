@@ -6,11 +6,11 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 14:24:15 by skock             #+#    #+#             */
-/*   Updated: 2024/11/27 12:01:40 by skock            ###   ########.fr       */
+/*   Updated: 2024/11/27 12:26:46 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strchr(const char *str, int c)
 {
